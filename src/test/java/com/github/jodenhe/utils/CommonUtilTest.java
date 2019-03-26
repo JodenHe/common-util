@@ -1,4 +1,4 @@
-package top.joden123.utils;
+package com.github.jodenhe.utils;
 
 import org.junit.Assert;
 import org.junit.Test;
