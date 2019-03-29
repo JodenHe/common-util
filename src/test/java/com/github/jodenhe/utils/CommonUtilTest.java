@@ -3,7 +3,10 @@ package com.github.jodenhe.utils;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.lang.reflect.InvocationTargetException;
+import java.text.ParseException;
 import java.util.Date;
+import java.util.Objects;
 
 public class CommonUtilTest {
 
@@ -69,5 +72,79 @@ public class CommonUtilTest {
         String str = "aaabbbcdeaaa";
         System.out.println(CommonUtil.trim(str, "aa")); /* return abbbcdea */
         System.out.println(CommonUtil.trim(str, "a")); /* return bbbcde */
+    }
+
+    @Test
+    public void isNotEmpty() {
+        Assert.assertFalse(CommonUtil.isNotEmpty(""));
+        Assert.assertFalse(CommonUtil.isNotEmpty(null));
+    }
+
+    @Test
+    public void isNotBlank() {
+        Assert.assertFalse(CommonUtil.isNotBlank("  "));
+        Assert.assertFalse(CommonUtil.isNotBlank(null));
+        Assert.assertFalse(CommonUtil.isNotBlank(""));
+    }
+
+    @Test
+    public void convertToMethodName() {
+        Assert.assertEquals("setName", CommonUtil.convertToMethodName("name", A.class, true));
+        Assert.assertEquals("getName", CommonUtil.convertToMethodName("name", A.class, false));
+
+    }
+
+    @Test
+    public void setFieldValue() throws InvocationTargetException, IllegalAccessException, InstantiationException {
+        String name = "test";
+        A a = new A(name);
+        A o = A.class.newInstance();
+        CommonUtil.setFieldValue(o, "name", name, null);
+        Assert.assertEquals(a, o);
+    }
+
+    @Test
+    public void parseDateTime() throws ParseException {
+        Date date = CommonUtil.parseDateTime("2019-04-01 00:00:00", "GMT-8", "yyyy-MM-dd HH:mm:ss");
+        System.out.println(date);
+    }
+}
+
+class A {
+    private String name;
+
+    public A() {
+    }
+
+    public A(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        A a = (A) o;
+        return Objects.equals(name, a.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
+    }
+
+    @Override
+    public String toString() {
+        return "A{" +
+                "name='" + name + '\'' +
+                '}';
     }
 }
