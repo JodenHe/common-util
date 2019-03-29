@@ -6,7 +6,7 @@
 
     <groupId>com.github.jodenhe</groupId>
     <artifactId>common-util</artifactId>
-    <version>1.0-RELEASE</version>
+    <version>1.1-SNAPSHOT</version>
 
     <name>common-util</name>
     <description>this is a common util</description>
