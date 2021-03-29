@@ -7,6 +7,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.text.ParseException;
 import java.util.Date;
 import java.util.Objects;
+import java.util.TimeZone;
 
 public class CommonUtilTest {
 
@@ -107,6 +108,13 @@ public class CommonUtilTest {
     public void parseDateTime() throws ParseException {
         Date date = CommonUtil.parseDateTime("2019-04-01 00:00:00", "GMT-8", "yyyy-MM-dd HH:mm:ss");
         System.out.println(date);
+    }
+
+    @Test
+    public void timeZoneOffset() {
+        TimeZone t1 = TimeZone.getTimeZone("GMT+0830");
+        TimeZone t2 = TimeZone.getTimeZone("GMT+5");
+        Assert.assertEquals((long) (3.5 * 60 * 60 * 1000), CommonUtil.timeZoneOffset(t1, t2));
     }
 }
 

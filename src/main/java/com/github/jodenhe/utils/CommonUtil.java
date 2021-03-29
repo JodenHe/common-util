@@ -397,4 +397,15 @@ public class CommonUtil {
         }
         return sdf.parse(value);
     }
+
+    /**
+     * 两个时区的毫秒数差
+     * @param t1
+     * @param t2
+     * @return
+     */
+    public static long timeZoneOffset(TimeZone t1, TimeZone t2) {
+        long currentTimeMillis = System.currentTimeMillis();
+        return t1.getOffset(currentTimeMillis) - t2.getOffset(currentTimeMillis);
+    }
 }
